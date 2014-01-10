@@ -1,0 +1,48 @@
+name:                IsEmpty
+version:             0.1.0.0
+synopsis:            Very simple class to determine if a structure is empty
+description:         Very general way to determine if a structure is empty.
+                     Works with Foldable, IntSet and Mono-Traversable.
+homepage:            https://github.com/jcristovao/isempty
+license:             BSD3
+license-file:        LICENSE
+author:              João Cristóvão
+maintainer:          jmacristovao@gmail.com
+category:            Data
+build-type:          Simple
+
+-- Extra files to be distributed with the package, such as examples or a 
+-- README.
+-- extra-source-files:  
+
+-- Constraint on the version of Cabal needed to build this package.
+cabal-version:       >=1.16
+
+library
+  exposed-modules:     Data.IsEmpty
+                       Data.IsEmpty.MonoTraversable
+  build-depends:       base             >= 4.6 
+                     , containers       >= 0.5
+                     , mono-traversable >= 0.2
+
+  hs-source-dirs:      src
+  ghc-options:         -Wall
+  default-language:    Haskell2010
+  
+test-suite test
+  type:               exitcode-stdio-1.0
+  main-is:            main.hs
+  hs-source-dirs:     test,src
+  build-depends:      base        >= 4.6
+                    , mono-traversable >= 0.2
+                    , containers  >= 0.5
+                    , unordered-containers >= 0.2.3
+                    , vector      >= 0.10.0.1
+                    , text        >= 0.11.3.1
+                    , bytestring  >= 0.10.0.2
+                    , system-filepath >= 0.4.6
+                    , QuickCheck    >= 2.6
+                    , quickcheck-instances >= 0.3.5 
+                    , HUnit         >= 1.2.5.2
+                    , hspec         >= 1.7.2
+  default-language: Haskell2010
