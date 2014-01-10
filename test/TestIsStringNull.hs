@@ -4,9 +4,9 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module TestIsStringEmpty (specs) where
+module TestIsStringNull (specs) where
 
-import Data.IsEmpty
+import Data.IsNull
 
 import Test.Hspec
 import Test.QuickCheck
@@ -39,12 +39,29 @@ specs = do
 ------------------------------------------------------------------------------
 -- Maybe ---------------------------------------------------------------------
 ------------------------------------------------------------------------------
-  describe "IsEmpty IsString" $ do
+  describe "IsNull IsString" $ do
     it "Equals Data.Text.empty for Text" $ do
-      property $ \(x :: Text) -> isEmpty x == T.null x
+      property $ \(x :: Text) -> isNull x == T.null x
 
     it "Equals Data.ByteString.empty for ByteString" $ do
-      property $ \(x :: ByteString) -> isEmpty x == BS.null x
+      property $ \(x :: ByteString) -> isNull x == BS.null x
 
     it "Equals Filesystem.Path for System-Filepath" $ do
-      property $ \(x :: FP.FilePath) -> isEmpty x == FP.null x
+      property $ \(x :: FP.FilePath) -> isNull x == FP.null x
+
+  describe "IsNNull IsString (nested isNull)" $ do
+    it "Handles non null lists of non null foldables the same (returns False)" $ do
+      isNNull (["abc"]::[String]) `shouldBe` False
+      isNNull (["abc"]::[Text  ]) `shouldBe` False
+      isNNull (["","a"]::[String]) `shouldBe` False
+      isNNull (Just "a"::Maybe String) `shouldBe` False
+
+    it "Handles non empty lists of null foldable elements (1) (returns True)" $ do
+      isNNull ([""] :: [String]) `shouldBe` True
+      isNNull ([""] :: [Text  ]) `shouldBe` True
+      isNNull (Just ""::Maybe Text) `shouldBe` True
+
+    it "Handles non empty lists of null foldable elements (2) (returns True)" $ do
+      isNNull (["",""]::[String])  `shouldBe` True
+      isNNull (["",""]::[Text])  `shouldBe` True
+
