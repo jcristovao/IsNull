@@ -1,5 +1,5 @@
 name:                IsNull
-version:             0.1.0.0
+version:             0.1.2.0
 synopsis:            Very simple class to determine if a structure is empty
 description:         Very general way to determine if a structure is empty.
                      Works with Foldable, and either IsString or Mono-Traversable.
@@ -23,7 +23,7 @@ library
   exposed-modules:     Data.IsNull
                        Data.IsNull.MonoTraversable
                        Data.IsNull.MonadPlus
-                       --Data.IsNull.InnerFoldable
+                       Data.IsNull.MonoidId
   build-depends:       base             >= 4.6 
                      , containers       >= 0.5
                      , mono-traversable >= 0.2

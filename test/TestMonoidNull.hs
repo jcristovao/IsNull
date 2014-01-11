@@ -2,9 +2,9 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module TestIsStringNull (specs) where
+module TestMonoidNull (specs) where
 
-import Data.IsNull
+import Data.IsNull.MonoidId
 
 import Test.Hspec
 import Test.QuickCheck
