@@ -10,9 +10,16 @@ module Data.IsNull.MonadPlus (
 ) where
 
 import Control.Monad
+import qualified Data.Foldable as F
+import Data.IsNull
+import Data.String
 
 class IsNullM m a where
-  isNullM :: m a -> Bool
+  isNullM :: m a -> m Bool
 
-instance (Monad m, MonadPlus m, Eq (m a)) => IsNullM m a where
-  isNullM mv = mv == mzero
+-- this one only applies to Text and Bytestring
+instance (Monad m, IsString f, Eq f) => IsNullM m f where
+  isNullM = liftM isNull
+
+instance (Monad m, F.Foldable f, IsString a, Eq a) => IsNullM m (f a) where
+  isNullM = liftM isNNull

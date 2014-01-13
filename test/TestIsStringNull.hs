@@ -55,6 +55,11 @@ specs = do
       isNNull (Just "a"::Maybe String) `shouldBe` False
       isNNull (Right "a":: Either Int String) `shouldBe` False
 
+    it "Handles non-null 'empty' values when applicable (either)" $ do
+      isNNull (Left "a" :: Either String String) `shouldBe` True
+      isNNull (Left ""  :: Either String String) `shouldBe` True
+      isNNull (Right ""  :: Either String String) `shouldBe` True
+
     it "Handles non empty lists of null foldable elements (1) (returns True)" $ do
       isNNull ([""] :: [String]) `shouldBe` True
       isNNull ([""] :: [Text  ]) `shouldBe` True

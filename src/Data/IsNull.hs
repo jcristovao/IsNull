@@ -25,4 +25,4 @@ instance IsNull (Set.Set a) where
 isNNull
   :: (F.Foldable f, IsString g, Eq g)
   => f g -> Bool
-isNNull = F.all isNull
+isNNull fg =  F.all isNull fg
