@@ -4,35 +4,21 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module TestMonadPlusNull (specs) where
+module Control.Monad.IsNullSpec (spec) where
 
-import Data.IsNull
-import Data.IsNull.MonadPlus
+import Data.IsNull()
+import Control.Monad.IsNull
 
 import Test.Hspec
 import Test.QuickCheck
-import Test.QuickCheck.Instances
-import VectorInstances
+import Test.QuickCheck.Instances()
+import VectorInstances()
 
-import Data.Maybe
 import Data.Text (Text)
 
-import qualified Data.List          as L
-import qualified Data.Set           as Set
-import qualified Data.Map           as Map
-import qualified Data.IntMap        as IM
-import qualified Data.Sequence      as Seq
-import qualified Data.HashSet       as HS
-import qualified Data.HashMap.Lazy  as HML
-import qualified Data.HashMap.Strict as HMS
-import qualified Data.Vector        as V
 import qualified Filesystem.Path.CurrentOS as FP
 
 import Control.Applicative
-
--- the ' avoids conflits with Base 4.7
-isLeft' :: Either a b -> Bool
-isLeft' = either (const True) (const False)
 
 fpToText :: FP.FilePath -> Text
 fpToText = either id id . FP.toText
@@ -44,9 +30,9 @@ instance Arbitrary FP.FilePath where
 instance CoArbitrary FP.FilePath where
     coarbitrary = coarbitrary . fpToText
 
-{-# ANN specs ("HLint: ignore Redundant do"::String) #-}
-specs :: Spec
-specs = do
+{-# ANN spec ("HLint: ignore Redundant do"::String) #-}
+spec :: Spec
+spec = do
 ------------------------------------------------------------------------------
 -- Maybe ---------------------------------------------------------------------
 ------------------------------------------------------------------------------

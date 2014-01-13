@@ -4,14 +4,14 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module TestCommonNull (specs) where
+module Data.IsNull.InternalSpec (spec) where
 
 import Data.IsNull.Internal
 
 import Test.Hspec
 import Test.QuickCheck
-import Test.QuickCheck.Instances
-import VectorInstances
+import Test.QuickCheck.Instances()
+import VectorInstances()
 
 import Data.Maybe
 import Data.Text (Text)
@@ -43,9 +43,9 @@ instance Arbitrary FP.FilePath where
 instance CoArbitrary FP.FilePath where
     coarbitrary = coarbitrary . fpToText
 
-{-# ANN specs ("HLint: ignore Redundant do"::String) #-}
-specs :: Spec
-specs = do
+{-# ANN spec ("HLint: ignore Redundant do"::String) #-}
+spec :: Spec
+spec = do
 ------------------------------------------------------------------------------
 -- Maybe ---------------------------------------------------------------------
 ------------------------------------------------------------------------------

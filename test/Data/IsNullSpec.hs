@@ -2,13 +2,13 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module TestIsStringNull (specs) where
+module Data.IsNullSpec(spec) where
 
 import Data.IsNull
 
 import Test.Hspec
 import Test.QuickCheck
-import Test.QuickCheck.Instances
+import Test.QuickCheck.Instances()
 
 import Data.ByteString (ByteString)
 import Data.Text (Text)
@@ -31,9 +31,9 @@ instance CoArbitrary FP.FilePath where
 
 
 
-{-# ANN specs ("HLint: ignore Redundant do"::String) #-}
-specs :: Spec
-specs = do
+{-# ANN spec ("HLint: ignore Redundant do"::String) #-}
+spec :: Spec
+spec = do
 ------------------------------------------------------------------------------
 -- Maybe ---------------------------------------------------------------------
 ------------------------------------------------------------------------------

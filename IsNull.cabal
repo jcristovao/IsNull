@@ -22,8 +22,8 @@ cabal-version:       >=1.16
 library
   exposed-modules:     Data.IsNull
                        Data.IsNull.MonoTraversable
-                       Data.IsNull.MonadPlus
                        Data.IsNull.MonoidId
+                       Control.Monad.IsNull
   build-depends:       base             >= 4.6 
                      , containers       >= 0.5
                      , mono-traversable >= 0.2

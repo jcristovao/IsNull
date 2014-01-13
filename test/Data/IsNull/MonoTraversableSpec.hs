@@ -2,13 +2,13 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module TestMonoTraversableNull (specs) where
+module Data.IsNull.MonoTraversableSpec (spec) where
 
 import Data.IsNull.MonoTraversable
 
 import Test.Hspec
 import Test.QuickCheck
-import Test.QuickCheck.Instances
+import Test.QuickCheck.Instances()
 
 import Data.ByteString (ByteString)
 import Data.Text (Text)
@@ -18,9 +18,9 @@ import qualified Data.Text       as T
 import qualified Data.IntSet     as IS
 import qualified Data.Vector     as V
 
-{-# ANN specs ("HLint: ignore Redundant do"::String) #-}
-specs :: Spec
-specs = do
+{-# ANN spec ("HLint: ignore Redundant do"::String) #-}
+spec :: Spec
+spec = do
 ------------------------------------------------------------------------------
 -- Maybe ---------------------------------------------------------------------
 ------------------------------------------------------------------------------

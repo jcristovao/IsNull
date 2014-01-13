@@ -5,7 +5,7 @@
 {-# LANGUAGE IncoherentInstances  #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module Data.IsNull.MonadPlus (
+module Control.Monad.IsNull(
   IsNullM(..)
 ) where
 
