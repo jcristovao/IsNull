@@ -1,5 +1,5 @@
 name:                IsNull
-version:             0.1.2.0
+version:             0.2.0.0
 synopsis:            Very simple class to determine if a structure is empty
 description:         Very general way to determine if a structure is empty.
                      Works with Foldable, and either IsString or Mono-Traversable.
