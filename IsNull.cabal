@@ -22,11 +22,10 @@ cabal-version:       >=1.16
 library
   other-modules:       Data.IsNull.Internal
   exposed-modules:     Data.IsNull
-                  --   Data.IsNull.MonoidId
-                  --   Control.Monad.IsNull
   build-depends:       base-compat      >= 0.3.1 
                      , containers       >= 0.5
-                     , mono-traversable >= 0.2
+                     , text             >= 0.11.3
+                     , bytestring       >= 0.10.0
 
   hs-source-dirs:      src
   ghc-options:         -Wall
@@ -40,8 +39,9 @@ test-suite test
   main-is:            main.hs
   hs-source-dirs:     test,src
   build-depends:      base-compat      >= 0.3.1
-                    , mono-traversable >= 0.2
                     , containers  >= 0.5
+                    , text             >= 0.11.3
+                    , bytestring       >= 0.10.0
                     --, BaseFuture   >= 0.1
                     , unordered-containers >= 0.2.3
                     , vector      >= 0.10.0.1
