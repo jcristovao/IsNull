@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP #-}
 {-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE UndecidableInstances #-}
 {-# LANGUAGE IncoherentInstances  #-}
@@ -18,32 +17,31 @@ import qualified Data.Set as Set
 import Control.Monad (liftM)
 
 class IsNull a where
-  data Nullable a
+  type Nullable a
   isNull :: Nullable a -> Bool
 
   -- | Typing causes arthritis
   isN :: Nullable a -> Bool
-  isN = isNull
 
   -- | the logical negation of @'isNull'@
   notNull :: Nullable a -> Bool
-  notNull = not . isNull
+  {-notNull = not . isNull-}
 
   -- | Nested isNull
   isNullN :: F.Foldable f => f (Nullable a) -> Bool
-  isNullN = F.all isNull
+  {-isNullN = F.all isNull-}
 
   -- | Nested isNotNull
   notNullN :: F.Foldable f => f (Nullable a) -> Bool
-  notNullN = not . isNullN
+  {-notNullN = not . isNullN-}
 
   -- | Monadic Null
   isNullM :: Monad m => m (Nullable a) -> m Bool
-  isNullM = liftM isNull
+  {-isNullM = liftM isNull-}
 
   -- | Monadic Nested Null
   isNullNM :: (Monad m, F.Foldable f) => m (f (Nullable a)) -> m Bool
-  isNullNM = liftM isNullN
+  {-isNullNM = liftM isNullN-}
 
 
 instance IsNull Bool where
@@ -70,9 +68,9 @@ instance IsNull (Set.Set a) where
   type Nullable (Set.Set a) = Set.Set a
   isNull = Set.null
 
-instance (F.Foldable f)
-  => IsNull (f a) where
-  type Nullable (f a) = (f a)
+instance (F.Foldable a)
+  => IsNull (a b) where
+  type Nullable (a b) = (a b)
   isNull = F.foldr (\_ _ -> False) True
 
 -- catch all error raising
