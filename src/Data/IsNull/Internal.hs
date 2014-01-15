@@ -18,7 +18,7 @@ import qualified Data.Set as Set
 import Control.Monad (liftM)
 
 class IsNull a where
-  type Nullable a
+  data Nullable a
   isNull :: Nullable a -> Bool
 
   -- | Typing causes arthritis
@@ -26,35 +26,57 @@ class IsNull a where
   isN = isNull
 
   -- | the logical negation of @'isNull'@
-  {-notNull :: Nullable a -> Bool-}
-  {-notNull = not . isNull-}
+  notNull :: Nullable a -> Bool
+  notNull = not . isNull
 
   -- | Nested isNull
-  {-isNullN :: F.Foldable f => f (Nullable a) -> Bool-}
-  {-isNullN = F.all isNull-}
+  isNullN :: F.Foldable f => f (Nullable a) -> Bool
+  isNullN = F.all isNull
 
   -- | Nested isNotNull
-  {-notNullN :: F.Foldable f => f (Nullable a) -> Bool-}
-  {-notNullN = not . isNullN-}
+  notNullN :: F.Foldable f => f (Nullable a) -> Bool
+  notNullN = not . isNullN
 
   -- | Monadic Null
-  {-isNullM :: Monad m => m (Nullable a) -> m Bool-}
-  {-isNullM = liftM isNull-}
+  isNullM :: Monad m => m (Nullable a) -> m Bool
+  isNullM = liftM isNull
 
   -- | Monadic Nested Null
-  {-isNullNM :: (Monad m, F.Foldable f) => m (f (Nullable a)) -> m Bool-}
-  {-isNullNM = liftM isNullN-}
+  isNullNM :: (Monad m, F.Foldable f) => m (f (Nullable a)) -> m Bool
+  isNullNM = liftM isNullN
 
 
 instance IsNull Bool where
   type Nullable Bool = Bool
   isNull = id
 
+instance IsNull T.Text where
+  type Nullable T.Text = T.Text
+  isNull = T.null
+
+instance IsNull LT.Text where
+  type Nullable LT.Text = LT.Text
+  isNull = LT.null
+
+instance IsNull BS.ByteString where
+  type Nullable BS.ByteString = BS.ByteString
+  isNull = BS.null
+
+instance IsNull LBS.ByteString where
+  type Nullable LBS.ByteString = LBS.ByteString
+  isNull = LBS.null
+
 instance IsNull (Set.Set a) where
   type Nullable (Set.Set a) = Set.Set a
   isNull = Set.null
 
-{-instance (O.MonoFoldable f) => IsNull f where-}
-  {-type Nullable f = f-}
-  {-isNull = O.onull-}
+instance (F.Foldable f)
+  => IsNull (f a) where
+  type Nullable (f a) = (f a)
+  isNull = F.foldr (\_ _ -> False) True
 
+-- catch all error raising
+{-instance-}
+     {-IsNull a where-}
+  {-type Nullable a = a-}
+  {-isNull = undefined-}
