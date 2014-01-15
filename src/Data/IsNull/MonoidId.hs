@@ -19,23 +19,23 @@
 --
 -- You have been warned!
 module Data.IsNull.MonoidId (
-    IsNull(..)
-  , isNNull
+    {-IsNull(..)-}
+  {-, isNNull-}
 ) where
 
-import Data.IsNull.Internal
-import qualified Data.Foldable as F
-import Data.Set as Set
-import Data.Monoid
+{-import Data.IsNull.Internal-}
+{-import qualified Data.Foldable as F-}
+{-import Data.Set as Set-}
+{-import Data.Monoid-}
 
-instance (Monoid oid, Eq oid) => IsNull oid where
-  isNull oid = oid == mempty
+{-instance (Monoid oid, Eq oid) => IsNull oid where-}
+  {-isNull oid = oid == mempty-}
 
-instance IsNull (Set.Set a) where
-  isNull = Set.null
+{-instance IsNull (Set.Set a) where-}
+  {-isNull = Set.null-}
 
 -- | Nested is Null: is the container null, or are all of its items null?
-isNNull
-  :: (F.Foldable f, Monoid g, Eq g)
-  => f g -> Bool
-isNNull = F.all isNull
+{-isNNull-}
+  {-:: (F.Foldable f, Monoid g, Eq g)-}
+  {-=> f g -> Bool-}
+{-isNNull = F.all isNull-}

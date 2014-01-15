@@ -14,6 +14,7 @@ import Test.QuickCheck.Instances()
 import VectorInstances()
 
 import Data.Maybe
+import Data.Either
 import Data.Text (Text)
 
 import qualified Data.List          as L
@@ -28,10 +29,6 @@ import qualified Data.Vector        as V
 import qualified Filesystem.Path.CurrentOS as FP
 
 import Control.Applicative
-
--- the ' avoids conflits with Base 4.7
-isLeft' :: Either a b -> Bool
-isLeft' = either (const True) (const False)
 
 fpToText :: FP.FilePath -> Text
 fpToText = either id id . FP.toText
@@ -55,13 +52,12 @@ spec = do
       property $ \(x::[String]) -> isNull x == L.null x
       property $ \(x::[Text]) -> isN x == L.null x
 
-
     it "Equals Data.Maybe.isJust for Maybe" $ do
       property $ \(x :: Maybe Int) -> isNull x == isNothing x
       property $ \(x :: Maybe String) -> isNull x == isNothing x
 
     it "Equals Data.Either.isRight (GHC 7.8) for Either" $ do
-      property $ \(x :: Either String String) -> isNull x == isLeft' x
+      property $ \(x :: Either String String) -> isNull x == isLeft x
 
     it "Equals Data.Set.null for Set" $ do
       property $ \(x :: Set.Set String) -> isNull x == Set.null x

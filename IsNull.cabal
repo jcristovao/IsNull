@@ -1,5 +1,5 @@
 name:                IsNull
-version:             0.2.0.1
+version:             0.3.0.0
 synopsis:            Very simple class to determine if a structure is empty
 description:         Very general way to determine if a structure is empty.
                      Works with Foldable, and either IsString or Mono-Traversable.
@@ -22,12 +22,10 @@ cabal-version:       >=1.16
 library
   other-modules:       Data.IsNull.Internal
   exposed-modules:     Data.IsNull
-                       Data.IsNull.MonoTraversable
-                       Data.IsNull.MonoidId
-                       Control.Monad.IsNull
+                  --   Data.IsNull.MonoidId
+                  --   Control.Monad.IsNull
   build-depends:       base-compat      >= 0.3.1 
                      , containers       >= 0.5
-                     --, BaseFuture       >= 0.1
                      , mono-traversable >= 0.2
 
   hs-source-dirs:      src

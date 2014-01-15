@@ -7,7 +7,6 @@
 
 module Data.IsNull (
     IsNull(..)
-  , isNNull
 ) where
 
 import Data.IsNull.Internal
