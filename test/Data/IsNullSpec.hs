@@ -33,7 +33,6 @@ instance CoArbitrary FP.FilePath where
     coarbitrary = coarbitrary . fpToText
 
 instance IsNull FP.FilePath where
-  type Nullable FP.FilePath = FP.FilePath
   isNull = FP.null
 
 
