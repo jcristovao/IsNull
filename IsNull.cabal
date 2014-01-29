@@ -2,8 +2,6 @@ name:                IsNull
 version:             0.2.1.0
 synopsis:            Very simple class to determine if a structure is empty
 description:         Very general way to determine if a structure is empty.
-                     Works with Foldable, and either IsString or Mono-Traversable.
-                     MonadPlus support maybe added if needed.
 homepage:            https://github.com/jcristovao/isempty
 license:             BSD3
 license-file:        LICENSE
