@@ -19,7 +19,7 @@ isNullM :: Monad m => m a -> m Bool
 isNullNM :: (Monad m, Foldable f) => m (f a) -> m Bool
 ```
 
-The N stands for (non-recursive) nested, such as:
+The N stands for (non-recursive) nested, such that:
 
 ```
 
