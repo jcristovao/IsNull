@@ -78,8 +78,3 @@ instance IsNull IS.IntSet where
 instance F.Foldable f => IsNull (f a) where
   isNull = F.foldr (\_ _ -> False) True
 
--- catch all error raising
-{-instance-}
-     {-IsNull a where-}
-  {-type Nullable a = a-}
-  {-isNull = undefined-}
