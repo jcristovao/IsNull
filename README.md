@@ -3,7 +3,7 @@ IsNull
 
 A typeclass to determine if a given container is null.
 Strongly inspired by [mono-traversable](https://hackage.haskell.org/package/mono-traversable), 
-but also supporting _Set_s. 
+but with the only goal of supporting IsNull and nested IsNull operations.
 
 Supported functions:
 
