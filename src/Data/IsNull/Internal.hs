@@ -55,7 +55,7 @@ class IsNull a where
 
 
 instance IsNull Bool where
-  isNull = id
+  isNull = not
 
 instance IsNull T.Text where
   isNull = T.null
