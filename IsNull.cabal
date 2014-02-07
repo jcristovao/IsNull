@@ -2,7 +2,7 @@ name:                IsNull
 version:             0.2.1.1
 synopsis:            Very simple class to determine if a structure is empty
 description:         Very general way to determine if a structure is empty.
-homepage:            https://github.com/jcristovao/isempty
+homepage:            https://github.com/jcristovao/IsNull
 license:             BSD3
 license-file:        LICENSE
 author:              João Cristóvão
