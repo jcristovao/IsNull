@@ -14,7 +14,7 @@ import Test.QuickCheck.Instances()
 import VectorInstances()
 
 import Data.Maybe
-import Data.Either
+import Data.Either.Compat
 import Data.Text (Text)
 
 import qualified Data.List          as L

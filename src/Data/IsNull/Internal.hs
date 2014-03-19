@@ -8,7 +8,7 @@
 
 module Data.IsNull.Internal where
 
-import qualified Data.Foldable        as F
+import qualified Data.Foldable.Compat as F
 import qualified Data.Text            as T
 import qualified Data.Text.Lazy       as LT
 import qualified Data.ByteString      as BS
@@ -17,14 +17,6 @@ import qualified Data.Set             as Set
 import qualified Data.IntSet          as IS
 import Control.Monad (liftM)
 
-type family Element mono
-type instance Element BS.ByteString  = BS.ByteString
-type instance Element LBS.ByteString = LBS.ByteString
-type instance Element T.Text         = T.Text
-type instance Element LT.Text        = LT.Text
-type instance Element [a]            = [a]
-type instance Element (Maybe a)      = a
-type instance Element (Either b a)   = a
 
 class IsNull a where
   isNull:: a -> Bool
@@ -53,6 +45,10 @@ class IsNull a where
   isNullNM :: (Monad m, F.Foldable f) => m (f a) -> m Bool
   isNullNM = liftM isNullN
 
+  -- | Alternative like <|> operator,
+  -- that always behaves like choice
+  (<§>) :: a -> a -> a
+  (<§>) a b = if isNull a then b else a
 
 instance IsNull Bool where
   isNull = not
