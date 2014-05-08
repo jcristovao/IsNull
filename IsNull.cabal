@@ -2,9 +2,9 @@ name:                IsNull
 version:             0.3.0.0
 synopsis:            A typeclass to determine if a given value is null.
 description:         A typeclass to determine if a given foldable type
-                     (or other) is empty / null / invalid.
+                     (or other) is empty ~ null ~ invalid.
                      The definition is intentionally vague, to cover types
-                     from Either, Text or Sets.
+                     from Either to Text and Sets.
 homepage:            https://github.com/jcristovao/IsNull
 license:             BSD3
 license-file:        LICENSE
