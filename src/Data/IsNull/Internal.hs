@@ -4,7 +4,6 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
 module Data.IsNull.Internal where
-
 import qualified Data.Foldable.Compat as F
 import qualified Data.Text            as T
 import qualified Data.Text.Lazy       as LT
@@ -13,6 +12,11 @@ import qualified Data.ByteString.Lazy as LBS
 import qualified Data.IntSet          as IS
 import Control.Monad (liftM)
 
+-- $setup
+-- The code examples in this module require GHC's `OverloadedStrings`
+-- extension:
+--
+-- >>> :set -XOverloadedStrings
 
 class IsNull a where
   -- | isNull ~ isEmpty ~ isInvalid?
