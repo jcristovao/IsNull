@@ -1,10 +1,16 @@
 {-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE FlexibleContexts     #-}
 {-# LANGUAGE OverloadedStrings    #-}
+{-# LANGUAGE CPP                  #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module Data.IsNull.Internal where
+module Data.IsNull.Class where
+
+#if !MIN_VERSION_base(4,7,0)
 import qualified Data.Foldable.Compat as F
+#else
+import qualified Data.Foldable        as F
+#endif
 import qualified Data.Text            as T
 import qualified Data.Text.Lazy       as LT
 import qualified Data.ByteString      as BS
@@ -83,9 +89,6 @@ class IsNull a where
   (<\>) a b = if isNull a then b else a
   infixl 3 <\>
 
-instance IsNull Bool where
-  isNull = not
-
 instance IsNull T.Text where
   isNull = T.null
 
@@ -101,6 +104,4 @@ instance IsNull LBS.ByteString where
 instance IsNull IS.IntSet where
   isNull = IS.null
 
-instance F.Foldable f => IsNull (f a) where
-  isNull = F.foldr (\_ _ -> False) True
 

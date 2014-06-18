@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverlappingInstances #-}
@@ -6,7 +7,7 @@
 
 module Data.IsNull.InternalSpec (spec) where
 
-import Data.IsNull.Internal
+import Data.IsNull
 
 import Test.Hspec
 import Test.QuickCheck
@@ -14,7 +15,11 @@ import Test.QuickCheck.Instances()
 import VectorInstances()
 
 import Data.Maybe
+#if !MIN_VERSION_base(4,7,0)
 import Data.Either.Compat
+#else
+import Data.Either
+#endif
 import Data.Text (Text)
 
 import qualified Data.List          as L

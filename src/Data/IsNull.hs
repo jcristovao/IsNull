@@ -48,6 +48,15 @@ module Data.IsNull (
 ) where
 
 
-import Data.IsNull.Internal
+import Data.IsNull.Class
+#if !MIN_VERSION_base(4,7,0)
+import qualified Data.Foldable.Compat as F
+#else
+import qualified Data.Foldable        as F
+#endif
+
+
+instance F.Foldable f => IsNull (f a) where
+  isNull = F.foldr (\_ _ -> False) True
 
 
