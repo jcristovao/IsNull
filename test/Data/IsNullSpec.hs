@@ -1,8 +1,8 @@
-{-# LANGUAGE CPP               #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# OPTIONS_GHC -fno-warn-orphans #-}
+{-# LANGUAGE CPP                        #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE ScopedTypeVariables        #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# OPTIONS_GHC -fno-warn-orphans       #-}
 
 module Data.IsNullSpec(spec) where
 
@@ -24,6 +24,8 @@ import Data.Text (Text)
 
 import Data.ByteString (ByteString)
 import Data.Text (Text)
+
+import qualified Data.Foldable as F
 
 import qualified Data.ByteString as BS
 import qualified Data.Text       as T
@@ -57,6 +59,22 @@ instance CoArbitrary FP.FilePath where
 instance IsNull FP.FilePath where
   isNull = FP.null
 
+newtype TextLike = TextLike Text
+  deriving (Eq,Ord,IsNull)
+
+data Option a = None | Perhaps a
+  deriving (Eq,Show)
+
+instance F.Foldable Option where
+  foldr _ z None = z
+  foldr f z (Perhaps x) = f x z
+
+-- It does not make sense, but this is just
+-- to test if it still possible to define a
+-- IsNull instance for a Foldable data type
+instance IsNull (Option a) where
+  isNull None = False
+  isNull (Perhaps a) = True
 
 {-# ANN spec ("HLint: ignore Redundant do"::String) #-}
 spec :: Spec
@@ -163,4 +181,12 @@ spec = do
       (isNullNM . return $ (Right ""    :: Either Text Text))     `shouldReturn` True
       (isNullNM . return $ (Left  "aaa" :: Either Text Text))     `shouldReturn` True
       (isNullNM . return $ (Left  ""    :: Either Text Text))     `shouldReturn` True
+
+    it "Handles newtypes" $ do
+      isNull (TextLike "") `shouldBe` True
+      isNull (TextLike "A") `shouldBe` False
+
+    it "Handles alternative definitions on foldable types" $ do
+      isNull (None :: Option Int) `shouldBe` False
+      isNull (Perhaps 3 :: Option Int) `shouldBe` True
 

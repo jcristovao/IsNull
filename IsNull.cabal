@@ -8,7 +8,8 @@ description:         A typeclass to determine if a given foldable type
 homepage:            https://github.com/jcristovao/IsNull
 license:             BSD3
 license-file:        LICENSE
-author:              João Cristóvão
+author:              João Cristóvão <jmacristovao@gmail.com>
+                   , Ivan Miljenovic <Ivan.Miljenovic@gmail.com>
 maintainer:          jmacristovao@gmail.com
 category:            Data
 build-type:          Simple
