@@ -34,8 +34,8 @@ and not all monoids @'mempty'@ means null:
   is provided for the @'Monoid'@ class. It's up to you to use
   @(==) mempty@ instead.
 
-The main use case for this package are boolean conditions,
-namely the @if@ @then@ @else@ construct.
+This class is suitable for use with @GeneralizedNewtypeDeriving@,
+thanks to the precious help of Ivan Miljenovic.
 
 Bugs, suggestions and comments are most welcomed!
 
