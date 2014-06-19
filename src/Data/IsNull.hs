@@ -43,7 +43,13 @@ Bugs, suggestions and comments are most welcomed!
 
 -}
 module Data.IsNull (
-    IsNull(..)
+      IsNull(..)
+    , notNull
+    , isNullN
+    , notNullN
+    , isNullM
+    , isNullNM
+    , (<\>)
 ) where
 
 #if !MIN_VERSION_base(4,7,0)
@@ -76,53 +82,53 @@ class IsNull a where
   -- False
   isNull:: a -> Bool
 
-  -- | the logical negation of @'isNull'@
-  notNull :: a -> Bool
-  notNull = not . isNull
+-- | the logical negation of @'isNull'@
+notNull :: (IsNull a) => a -> Bool
+notNull = not . isNull
 
-  -- | Nested isNull
-  --
-  -- >>> isNullN (Just "abc")
-  -- False
-  --
-  -- >>> isNullN (Just "")
-  -- True
-  --
-  -- >>> isNullN (Nothing :: Maybe String)
-  -- True
-  isNullN :: F.Foldable f => f a -> Bool
-  isNullN = F.all isNull
+-- | Nested isNull
+--
+-- >>> isNullN (Just "abc")
+-- False
+--
+-- >>> isNullN (Just "")
+-- True
+--
+-- >>> isNullN (Nothing :: Maybe String)
+-- True
+isNullN :: (IsNull a, F.Foldable f) => f a -> Bool
+isNullN = F.all isNull
 
-  -- | Nested isNotNull
-  notNullN :: F.Foldable f => f a -> Bool
-  notNullN = not . isNullN
+-- | Nested isNotNull
+notNullN :: (IsNull a, F.Foldable f) => f a -> Bool
+notNullN = not . isNullN
 
-  -- | Monadic isNull
-  --
-  -- >>> isNullM [""]
-  -- [True]
-  isNullM :: Functor m => m a -> m Bool
-  isNullM = fmap isNull
+-- | Monadic isNull
+--
+-- >>> isNullM [""]
+-- [True]
+isNullM :: (IsNull a, Functor m) => m a -> m Bool
+isNullM = fmap isNull
 
-  -- | Monadic Nested isNull
-  isNullNM :: (Functor m, F.Foldable f) => m (f a) -> m Bool
-  isNullNM = fmap isNullN
+-- | Monadic Nested isNull
+isNullNM :: (IsNull a, Functor m, F.Foldable f) => m (f a) -> m Bool
+isNullNM = fmap isNullN
 
-  -- | @'Alternative'@'s @'<|>'@ operator does not always operate as choice,
-  -- at least not in an intuitive way (for example with lists).
-  -- This one does:
-  --
-  -- >>> [2,3] <\> [4,5]
-  -- [2,3]
-  --
-  -- >>> [] <\> [4,5]
-  -- [4,5]
-  --
-  -- >>> [] <\> []
-  -- []
-  (<\>) :: a -> a -> a
-  (<\>) a b = if isNull a then b else a
-  infixl 3 <\>
+-- | @'Alternative'@'s @'<|>'@ operator does not always operate as choice,
+-- at least not in an intuitive way (for example with lists).
+-- This one does:
+--
+-- >>> [2,3] <\> [4,5]
+-- [2,3]
+--
+-- >>> [] <\> [4,5]
+-- [4,5]
+--
+-- >>> [] <\> []
+-- []
+(<\>) :: (IsNull a) => a -> a -> a
+(<\>) a b = if isNull a then b else a
+infixl 3 <\>
 
 instance IsNull T.Text where
   isNull = T.null
