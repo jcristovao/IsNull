@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeFamilies #-}
@@ -10,6 +11,16 @@ import Data.IsNull
 import Test.Hspec
 import Test.QuickCheck
 import Test.QuickCheck.Instances()
+import VectorInstances()
+
+import Data.Maybe
+#if !MIN_VERSION_base(4,7,0)
+import Data.Either.Compat
+#else
+import Data.Either
+#endif
+import Data.Text (Text)
+
 
 import Data.ByteString (ByteString)
 import Data.Text (Text)
@@ -19,6 +30,17 @@ import qualified Data.Text       as T
 import qualified Data.IntSet     as IS
 import qualified Data.Vector     as V
 import qualified Filesystem.Path.CurrentOS as FP
+
+import qualified Data.List          as L
+import qualified Data.Set           as Set
+import qualified Data.Map           as Map
+import qualified Data.IntMap        as IM
+import qualified Data.Sequence      as Seq
+import qualified Data.HashSet       as HS
+import qualified Data.HashMap.Lazy  as HML
+import qualified Data.HashMap.Strict as HMS
+import qualified Filesystem.Path.CurrentOS as FP
+
 
 import Control.Applicative
 
@@ -39,9 +61,40 @@ instance IsNull FP.FilePath where
 {-# ANN spec ("HLint: ignore Redundant do"::String) #-}
 spec :: Spec
 spec = do
-------------------------------------------------------------------------------
--- Maybe ---------------------------------------------------------------------
-------------------------------------------------------------------------------
+  describe "IsNull" $ do
+    it "Equals null for lists (1)" $ property $ \(x::[Int]) -> isNull x == L.null x
+    it "Equals null for lists (2)" $ property $ \(x::[String]) -> isNull x == L.null x
+    it "Equals null for lists (3)" $ property $ \(x::[Text]) -> isNull x == L.null x
+
+    it "Equals Data.Maybe.isJust for Maybe (1)" $ property $ \(x :: Maybe Int) -> isNull x == isNothing x
+    it "Equals Data.Maybe.isJust for Maybe (2)" $ property $ \(x :: Maybe String) -> isNull x == isNothing x
+
+    it "Equals Data.Either.isRight (GHC 7.8) for Either (1)" $ property $ \(x :: Either String String) -> isNull x == isLeft x
+
+    it "Equals Data.Set.null for Set (1)" $ property $ \(x :: Set.Set String) -> isNull x == Set.null x
+    it "Equals Data.Set.null for Set (2)" $ property $ \(x :: Set.Set Int) -> isNull x == Set.null x
+
+    it "Equals Data.Map.null for Map (1)" $ property $ \(x :: Map.Map Int String) -> isNull x == Map.null x
+    it "Equals Data.Map.null for Map (2)" $ property $ \(x :: Map.Map String String) -> isNull x == Map.null x
+    it "Equals Data.Map.null for Map (3)" $ property $ \(x :: Map.Map Int Int) -> isNull x == Map.null x
+
+    it "Equals Data.IntMap.null for IntMap (1)" $ property $ \(x :: IM.IntMap String) -> isNull x == IM.null x
+    it "Equals Data.IntMap.null for IntMap (2)" $ property $ \(x :: IM.IntMap Int) -> isNull x == IM.null x
+
+    it "Equals Data.Sequence.null for Sequence (1)" $ property $ \(x  :: Seq.Seq String) -> isNull x == Seq.null x
+    it "Equals Data.Sequence.null for Sequence (2)" $ property $ \(x  :: Seq.Seq Int   ) -> isNull x == Seq.null x
+
+    it "Equals Data.HashSet.null for HashSet (1)" $ property $ \(x :: HS.HashSet String)  -> isNull x == HS.null x
+    it "Equals Data.HashSet.null for HashSet (2)" $ property $ \(x :: HS.HashSet Int   )  -> isNull x == HS.null x
+
+    it "Equals Data.HashMap.null for HashMap (1)" $ property $ \(x :: HML.HashMap String String) -> isNull x == HML.null x
+    it "Equals Data.HashMap.null for HashMap (2)" $ property $ \(x :: HMS.HashMap String String) -> isNull x == HMS.null x
+    it "Equals Data.HashMap.null for HashMap (3)" $ property $ \(x :: HML.HashMap String Int   ) -> isNull x == HML.null x
+    it "Equals Data.HashMap.null for HashMap (4)" $ property $ \(x :: HML.HashMap Int    Int   ) -> isNull x == HML.null x
+
+    it "Equals Data.Vector.null for Vector" $ do
+      property $ \(x :: V.Vector String) -> isNull x == V.null x
+
   describe "IsNull" $ do
     it "Equals Data.Text.empty for Text" $ do
       property $ \(x :: Text) -> isNull x == T.null x
