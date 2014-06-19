@@ -5,7 +5,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
 {- |
-Module:      IsNull
+Module:      Data.IsNull
 Description: A typeclass to determine if a given value is null.
 Copyright:   João Cristóvão, 2014
 License:     BSD3
